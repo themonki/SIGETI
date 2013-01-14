@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/newcss1.css" rel="stylesheet" type="text/css" />
+        <title>Editar estaci&oacute;n</title>
+    </h:head>
+
+    <h:body>
+
+         <div id="top">
+            <img src="./resources/logo.png" alt="logo"  ></img>
+            <div id="top_rigth">
+
+
+                <h:form>
+                    <h:outputText value="Bievenido, #{employeeHolder.currentEmpleado.nombre}"/>
+                    <h:commandLink action="#{authentication.logout}">
+                        <img src="./resources/exit.png" alt="salir" width="30" height="30"></img>
+                    </h:commandLink>
+                </h:form>
+            </div>
+         </div>
+        <div id="center">
+            <div id="center_left">
+                <h:form>
+                    <h:dataTable value="#{beanContent.menuOptions}" var="l">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Menu"/>
+                            </f:facet>
+                            <h:commandLink action="#{beanContent.findLink(l.get(1))}">
+                                <h:outputText value="#{l.get(0)}"/>
+                            </h:commandLink>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div  id="center_center">
+                <div>
+                    <h:messages style="color: red"   />
+                    <br></br>
+                    <h:form styleClass="Formulario">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <center>
+                                <h:outputText value="Editar una estaci&oacute;n"/>
+                                </center>
+                            </f:facet>
+                            <h:outputText value="Id:"/>
+                            <h:outputText value="#{beanEstacion.id}"/>
+                            <h:outputText value="*Ubicaci&oacute;n:"/>
+                            <h:inputText value="#{beanEstacion.ubicacion}"
+                                         size="20"
+                                         required="true"
+                                         requiredMessage="La ubicaci&oacute;n es un dato requerido."/>
+                            <h:outputText value="Estado:"/>
+                            <h:selectOneMenu value="#{beanEstacion.estado}">
+                                <f:selectItem  itemValue="true" itemLabel="Activa"/>
+                                <f:selectItem itemValue="false" itemLabel="Inactiva"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Nombre estaci&oacute;n principal:"
+                                          rendered="#{beanEstacion.buscarPrincipales}"/>
+                            <h:inputText value="#{beanEstacion.nombre}"
+                                         rendered="#{beanEstacion.buscarPrincipales}"/>
+                            <h:outputText value="Operario acargo:"
+                                          rendered="#{beanEstacion.buscarPrincipales}"/>
+                            <h:selectOneMenu value="#{beanEstacion.idOperario}"
+                                             rendered="#{beanEstacion.buscarPrincipales}">
+                                <f:selectItems value="#{beanEmployee.availableOperario}"/>
+                            </h:selectOneMenu>
+                            <br/><br/>
+                            <h:commandButton value="Editar"
+                                             styleClass="JButton"
+                                             action="#{beanEstacion.editarEstacion()}" /><br/>
+                        </h:panelGrid>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">SIGETI: Sistema de Gesti&oacute;n de Transporte Integrado.</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

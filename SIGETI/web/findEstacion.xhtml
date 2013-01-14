@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/newcss1.css" rel="stylesheet" type="text/css" />
+        <title>Consultar estaci&oacute;n</title>
+    </h:head>
+
+
+    <h:body>
+
+          <div id="top">
+            <img src="./resources/logo.png" alt="logo"  ></img>
+            <div id="top_rigth">
+
+
+                <h:form>
+                    <h:outputText value="Bievenido, #{employeeHolder.currentEmpleado.nombre}"/>
+                    <h:commandLink action="#{authentication.logout}">
+                        <img src="./resources/exit.png" alt="salir" width="30" height="30"></img>
+                    </h:commandLink>
+                </h:form>
+            </div>
+         </div>
+        <div id="center">
+            <div id="center_left">
+                <h:form>
+                    <h:dataTable value="#{beanContent.menuOptions}" var="l">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Menu"/>
+                            </f:facet>
+                            <h:commandLink action="#{beanContent.findLink(l.get(1))}">
+                                <h:outputText value="#{l.get(0)}"/>
+                            </h:commandLink>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div  id="center_center">
+                <h:messages style="color: red"/>
+                <br></br>
+                <h:form styleClass="Formulario">
+                    <h:panelGrid columns="3">
+                        <f:facet name="header">
+                            <center>
+                                <h:outputText value="Consultar estaci&oacute;n"/>
+                            </center>
+                        </f:facet>
+                        <h:outputText value="Ubicacion:"/>
+                        <h:inputText value="#{beanEstacion.ubicacionBusqueda}"/>
+                        <br/>
+                        <h:outputText value="Nombre:"/>
+                        <h:inputText value="#{beanEstacion.nombreBusqueda}"
+                                     disabled="#{!beanEstacion.buscarPrincipales}"
+                                     id="NombreOn"/>
+                        <h:selectBooleanCheckbox value="#{beanEstacion.buscarPrincipales}">
+                            <f:ajax render="NombreOn"/>
+                        </h:selectBooleanCheckbox>
+                        <center>
+                            <h:commandButton value="Consultar"
+                                             styleClass="JButton"
+                                             action="#{beanEstacion.actionFindEstacion()}"
+                                              /><br/>
+                        </center>
+                    </h:panelGrid>
+                </h:form>
+
+                <br/>
+                <h:outputLabel value="*Para buscar todas las estaciones principales, active el campo nombre y dejelo vacio."/>
+                <br/>
+                <h:outputLabel value="*Para buscar todos las estaciones paradero, desactive el campo nombre y deje vacio el campo ubicaci&oacute;n"/>
+                <br/><br/>
+
+                <h:form styleClass="Formulario"
+                        rendered="#{beanEstacion.renderTable}">
+                    <h:dataTable
+                        border="1"
+                        var="estacion"
+                        value="#{beanEstacion.buscarPrincipales?
+                                 beanEstacion.findEstacionesPrincipales():beanEstacion.findEstacionesParadero()}"
+                        >
+                        <f:facet name="caption">Resultado de la consulta</f:facet>
+
+                        <h:column>
+                            <f:facet name="header">Id estacion</f:facet>
+                            #{estacion.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Ubicaci&oacute;n</f:facet>
+                            #{estacion.ubicacion}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Acci&oacute;n</f:facet>                            
+                            <h:commandLink value="#{beanEstacion.action}"
+                                           action="#{beanEstacion.getLinkActions()}"
+                                           actionListener="#{beanEstacion.detalleEstacion()}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">SIGETI: Sistema de Gesti&oacute;n de Transporte Integrado.</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

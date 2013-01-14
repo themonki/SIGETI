@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Home page Administrador</title>
+
+        <f:event listener="#{authentication.verifyEmpleadoLogin}" type="preRenderView"></f:event>
+    </h:head>
+
+    <h:body>
+        <div id="top">
+            <img src="./resources/logo.png" alt="logo"  ></img>
+            <div id="top_rigth">
+
+
+                <h:form>
+                    <h:outputText value="Bievenido, #{employeeHolder.currentEmpleado.nombre}"/>
+                    <h:commandLink action="#{authentication.logout}">
+                        <img src="./resources/exit.png" alt="salir" width="30" height="30"></img>
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </div>
+        <div id="center">
+            <div id="center_left">
+                <h:form>
+                    <h:dataTable value="#{beanContent.menuOptions}" var="l">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Menu"/>
+                            </f:facet>
+                            <h:commandLink action="#{beanContent.findLink(l.get(1))}">
+                                <h:outputText value="#{l.get(0)}"/>
+                            </h:commandLink>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+            <div id="center_center">
+                <ui:insert name="content" >Gestion Buses </ui:insert>
+                <br/>
+                <br/>
+                <br/>                
+                    <h:form style="display: inline-block">
+                        <h:panelGrid columns="2">
+                            <h:commandLink action="newBus"
+                                           actionListener="#{beanBus.statesForNew}"
+                                           immediate="true">
+                                <img src="./resources/busnew.gif"  width="100" height="100"/>
+                                <br/>
+                                <h:outputText value="Crear nuevo Bus"/>
+                            </h:commandLink>
+                            <h:commandLink action="findBus"
+                                           actionListener="#{beanBus.statesForEdit}"
+                                           immediate="true">
+                                <img src="./resources/busupdate.gif"  width="100" height="100"/>
+                                <br/>
+                                <h:outputText value="Editar bus"/>
+                            </h:commandLink>
+                            <h:commandLink action="findBus"
+                                           actionListener="#{beanBus.statesForErase}"
+                                           immediate="true">
+                                <img src="./resources/busdelete.gif"  width="100" height="100"/>
+                                <br/>
+                                <h:outputText value="Eliminar bus"/>
+                            </h:commandLink>
+                            <h:commandLink action="findBus"
+                                           actionListener="#{beanBus.statesForFind}"
+                                           immediate="true">
+                                <img src="./resources/busfind.gif"  width="100" height="100"/>
+                                <br/>
+                                <h:outputText value="Consultar bus"/>
+                            </h:commandLink>
+                        </h:panelGrid>
+                    </h:form>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">SIGETI: Sistema de Gesti&oacute;n de Transporte Integrado.</ui:insert>
+        </div>
+
+    </h:body>
+</html>

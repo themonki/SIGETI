@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/newcss1.css" rel="stylesheet" type="text/css" />
+        <title>Modificar Datos</title>
+    </h:head>
+    
+    <h:body>
+
+       <div id="top">
+            <img src="./resources/logo.png" alt="logo"  ></img>
+            <div id="top_rigth">
+                <h:form>
+                    <h:outputText value="Bievenido Visitante"/>
+                </h:form>
+            </div>
+            </div>
+        <div id="center">
+            <div id="center_left">
+                <h:form>
+                    <center><strong><h:outputText value="Men&uacute;"/></strong><br/><br/>
+                        <h:commandLink action="index">
+                            <h:outputText value="Inicio"/>
+                        </h:commandLink>
+                        <br/>
+                        <h:commandLink action="userManager">
+                            <h:outputText value="Gestión Usuario"/>
+                        </h:commandLink>
+                    </center>
+                </h:form>
+            </div>
+            <div  id="center_center">
+                <div>
+                    <ui:insert name="content">Modificar Datos del Usuario</ui:insert>
+
+                    <br></br>
+
+                    <img src="./resources/userCard.png"  width="100" height="100"></img>
+
+                    <br></br>
+                    <h:messages style="color: red"   />
+
+                    <br></br>
+                    <h:form styleClass="Formulario">
+
+                        <h:panelGrid columns="2">
+
+                            <h:outputText value="Documento:"/>
+                            <h:inputText value="#{beanUserCard.id}" />
+                            
+                             <h:outputText value="Password"/>
+                             <h:inputSecret  value="#{beanUserCard.password}" />
+                             
+                             <h:commandButton value="Consultar" styleClass="JButton" action="#{beanUserCard.findUser()}" /><br/>
+                            
+                        </h:panelGrid >
+                        <h:panelGrid columns="2" rendered="#{beanUserCard.consulta}">
+
+                            <h:outputText value="Documento:"/>
+                            <h:outputText value="#{beanUserCard.id}"  />
+
+                            <h:outputText value="Tipo Documento:"/>
+
+                            <h:outputText  value="#{beanUserCard.tipoId}"   />
+
+                            <h:outputText value="Nombres:"/>
+                            <h:inputText value="#{beanUserCard.nombre}"  size="49"  maxlength="49" />
+
+                            <h:outputText value="Apellidos:"/>
+                            <h:inputText value="#{beanUserCard.apellido}"  size="49" maxlength="49"/>
+
+                            <h:outputText value="Direccion:"/>
+                            <h:inputText value="#{beanUserCard.direccion}"  size="49" maxlength="49"/>
+
+                            <h:outputText value="Email:"/>
+                            <h:inputText value="#{beanUserCard.email}"  size="49" maxlength="49"/>
+
+                            <h:outputText value="Telefono:"/>
+                            <h:inputText value="#{beanUserCard.telefono}"  size="9" maxlength="9"/>
+
+                            <h:outputText value="Tarjeta Id"/>
+                            <h:outputText value="#{beanUserCard.adquiere_tarjeta}"  />
+
+                            <h:outputText value="Password"/>
+                            <h:inputSecret value="#{beanUserCard.password}"  size="31" maxlength="31"  />
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="7" rendered="#{beanUserCard.consulta}">
+                            <h:outputText value="Fecha De Nacimiento:"  />
+
+                            <h:outputText value="Año"/>
+                            <h:inputText value="#{beanUserCard.year}" size="4" maxlength="4" />
+
+                            <h:outputText value="Mes"/>
+                            <h:inputText value="#{beanUserCard.month}" size="2" maxlength="2" />
+                            <h:outputText value="Dia"/>
+                            <h:inputText value="#{beanUserCard.day}"  size="2" maxlength="2"/>
+
+                        </h:panelGrid>
+
+                        <h:commandButton  rendered="#{beanUserCard.consulta}" value="Aplicar" styleClass="JButton" action="#{beanUserCard.editUserCard()}" /><br/>
+
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">SIGETI: Sistema de Gesti&oacute;n de Transporte Integrado.</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
